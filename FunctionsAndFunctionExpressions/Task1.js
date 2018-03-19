@@ -23,7 +23,7 @@ function sumNumbers(numArr) {
         if (!(Number.isNaN(+(numArr[el]))) && Number.isFinite(+(numArr[el]))) {
         } else {
             console.log(numArr[el] + ' is not a real number. Can\'t calculate the sum!');
-            return NaN;
+            throw NaN;
         }
     }
     let result = 0;
