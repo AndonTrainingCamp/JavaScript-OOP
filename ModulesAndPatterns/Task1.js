@@ -42,7 +42,14 @@ function solve() {
             return studentID;
         },
         getAllStudents: function () {
-            return students;
+            let arrStudents = [];
+            for (let i = 0; i < students.length; i++) {
+                arrStudents[i] = {};
+                for (let el in students[i]) {
+                    arrStudents[i][el] = students[i][el];
+                }
+            }
+            return arrStudents;
         },
         submitHomework: function (studentID, homeworkID) {
             let isPassStudentID = false,
@@ -82,3 +89,6 @@ course1.addStudent('Lili Ivanova');
 course1.addStudent('Gosho Patkanov');
 console.log(course1.getAllStudents());
 course1.submitHomework(1, 1);
+let arrStud = course1.getAllStudents();
+arrStud[0].firstname = 'Penka';
+console.log(course1.getAllStudents());
