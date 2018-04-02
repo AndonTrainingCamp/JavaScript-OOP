@@ -76,22 +76,52 @@ function solve() {
         pushExamResults: function (results) {
             let isValidID = false,
                 idInputHistory = [];
-            for (let el in results) {
-                for (let el2 in students) {
-                    if (results[el].StudentID === students[el2].id) {
-                        isValidID = true;
-                    }
-                }
-            }
-            for (let el in results) {
-                idInputHistory.push(results[el].StudentID);
-            }
+            // If valid
+            checkInvalidStudentID();
+            checkSameStudentID();
+            checkIsScoreNumber();
+            // Save results
             for (let el in results) {
                 examResults.push(results[el]);
             }
+            // Validation test functions
+            function checkInvalidStudentID () {
+                for (let el in results) {
+                    for (let el2 in students) {
+                        if (results[el].StudentID === students[el2].id) {
+                            isValidID = true;
+                        }
+                    }
+                    if (!isValidID) {
+                        throw 'Invalid StudentID';
+                    } else {
+                        isValidID = false;
+                    }
+                }
+            }
+            function checkSameStudentID () {
+                for (let el in results) {
+                    idInputHistory.push(results[el].StudentID);
+                }
+                idInputHistory.forEach(currID => {
+                    if (idInputHistory.filter(id => id === currID).length >= 2) {
+                        throw 'Error: Same StudentID exist';
+                    }
+                });
+            }
+            function checkIsScoreNumber () {
+                results.forEach(element => {
+                    if (isNaN(element.score)) {
+                        throw 'Invalid score'
+                    }
+                });
+            }
         },
         getTopStudents: function () {
-
+            
+        },
+        getExamResults: function () {
+            return examResults;
         }
     };
     return Course;
@@ -103,3 +133,5 @@ course1.addStudent('Lili Ivanova');
 course1.addStudent('Gosho Patkanov');
 console.log(course1.getAllStudents());
 course1.submitHomework(1, 1);
+course1.pushExamResults([{StudentID: 1, score: 90}, {StudentID: 2, score: 65}]);
+console.log(course1.getExamResults());
