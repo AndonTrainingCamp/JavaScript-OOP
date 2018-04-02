@@ -74,7 +74,21 @@ function solve() {
             homeworks.push(homework);
         },
         pushExamResults: function (results) {
-
+            let isValidID = false,
+                idInputHistory = [];
+            for (let el in results) {
+                for (let el2 in students) {
+                    if (results[el].StudentID === students[el2].id) {
+                        isValidID = true;
+                    }
+                }
+            }
+            for (let el in results) {
+                idInputHistory.push(results[el].StudentID);
+            }
+            for (let el in results) {
+                examResults.push(results[el]);
+            }
         },
         getTopStudents: function () {
 
@@ -89,6 +103,3 @@ course1.addStudent('Lili Ivanova');
 course1.addStudent('Gosho Patkanov');
 console.log(course1.getAllStudents());
 course1.submitHomework(1, 1);
-let arrStud = course1.getAllStudents();
-arrStud[0].firstname = 'Penka';
-console.log(course1.getAllStudents());
