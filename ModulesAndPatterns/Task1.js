@@ -7,8 +7,8 @@ function solve() {
         presentationsNames = [],
         students = [],
         homeworks = [],
-        examResults = [],
-        studentID = 0;
+        examResults = {},
+        lastStudentID = 0;
     const Course = {
         init: function (title, presentations) {
             if (title.length < 1 || title[0] === ' ' || title[title.length - 1] === ' ' || title.search(/\s{2,}/g) !== -1) {
@@ -32,14 +32,14 @@ function solve() {
             if (fullname[0].search(/[A-Z]/) !== 0 || fullname[1].search(/[A-Z]/) !== 0) {
                 throw name + ' : Invalid student name';
             }
-            studentID++;
+            lastStudentID++;
             let student = {
                 firstname: fullname[0],
                 lastname: fullname[1],
-                id: studentID
+                id: lastStudentID
             };
             students.push(student);
-            return studentID;
+            return lastStudentID;
         },
         getAllStudents: function () {
             let arrStudents = [];
@@ -51,11 +51,11 @@ function solve() {
             }
             return arrStudents;
         },
-        submitHomework: function (studentID, homeworkID) {
+        submitHomework: function (StudentID, homeworkID) {
             let isPassStudentID = false,
                 isPassHomeworkID = false;
             students.forEach(element => {
-                if (element.id === studentID) {
+                if (element.id === StudentID) {
                     isPassStudentID = true;
                 }
             });
@@ -68,7 +68,7 @@ function solve() {
                 throw 'Invalid student or homework ID';
             }
             let homework = {
-                studentID: studentID,
+                StudentID: StudentID,
                 homeworkID: homeworkID
             }
             homeworks.push(homework);
@@ -79,10 +79,10 @@ function solve() {
             // If valid
             checkInvalidStudentID();
             checkSameStudentID();
-            checkIsScoreNumber();
+            checkIsNumberScore();
             // Save results
             for (let el in results) {
-                examResults.push(results[el]);
+                examResults[results[el].StudentID] = results[el].score;
             }
             // Validation test functions
             function checkInvalidStudentID () {
@@ -109,7 +109,7 @@ function solve() {
                     }
                 });
             }
-            function checkIsScoreNumber () {
+            function checkIsNumberScore () {
                 results.forEach(element => {
                     if (isNaN(element.score)) {
                         throw 'Invalid score'
@@ -118,9 +118,24 @@ function solve() {
             }
         },
         getTopStudents: function () {
-            
+            let finalScores = {};
+            students.forEach(student => {
+                let studentFinalScore,
+                    homeworkCounter = 0;
+                homeworks.forEach(homework => {
+                    console.log(student.id);
+                    if (student.id === homework.studentID) {
+                        homeworkCounter++;
+                    }
+                });
+                console.log(homeworkCounter);
+                let finalScore = (examResults[student.id]) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
+                finalScores[student.id] = finalScore;
+            });
+            console.log(finalScores);
         },
         getExamResults: function () {
+            console.log(homeworks);
             return examResults;
         }
     };
@@ -133,5 +148,10 @@ course1.addStudent('Lili Ivanova');
 course1.addStudent('Gosho Patkanov');
 console.log(course1.getAllStudents());
 course1.submitHomework(1, 1);
-course1.pushExamResults([{StudentID: 1, score: 90}, {StudentID: 2, score: 65}]);
+course1.submitHomework(2, 1);
+course1.submitHomework(2, 2);
+course1.submitHomework(2, 3);
+let studentsExamInput = [{StudentID: 1, score: 90}, {StudentID: 2, score: 65}];
+course1.pushExamResults(studentsExamInput);
 console.log(course1.getExamResults());
+course1.getTopStudents();
