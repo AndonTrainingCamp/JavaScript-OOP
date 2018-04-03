@@ -118,7 +118,7 @@ function solve() {
             }
         },
         getTopStudents: function () {
-            const resultArr = students.map(student => {
+            return students.map(student => {
                 const homeworkCounter = homeworks.filter(el => el.StudentID === student.id).length;
                 const examComponent = (examResults[student.id] || 0) * 75 / 100;
                 const hwComponent = homeworkCounter/presentationsNames.length * 25 / 100;
@@ -128,7 +128,6 @@ function solve() {
             })
             .sort((a, b) => b._finalScore - a._finalScore)
             .slice(0, 10);
-            return resultArr;
             }
         }
     };
