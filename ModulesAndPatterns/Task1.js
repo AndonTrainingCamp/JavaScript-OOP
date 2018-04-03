@@ -126,7 +126,6 @@ function solve() {
                 const copyOfStudent = Object.assign({_finalScore: finalScore}, student);
                 return copyOfStudent;
             }).sort((a, b) => b._finalScore - a._finalScore);
-            console.log(students);
             if (resultArr.length <= 10) {
                 return resultArr.slice(0, 9);
             } else {
