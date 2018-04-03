@@ -117,26 +117,24 @@ function solve() {
                 });
             }
         },
-        getTopStudents: function () {
-            let finalScores = {};
-            students.forEach(student => {
+        getTopStudents: function (limit) {
+            students.map(student => {
                 let studentFinalScore,
                     homeworkCounter = 0;
                 homeworks.forEach(homework => {
-                    console.log(student.id);
-                    if (student.id === homework.studentID) {
+                    if (student.id === homework.StudentID) {
                         homeworkCounter++;
                     }
                 });
-                console.log(homeworkCounter);
-                let finalScore = (examResults[student.id]) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
-                finalScores[student.id] = finalScore;
-            });
-            console.log(finalScores);
-        },
-        getExamResults: function () {
-            console.log(homeworks);
-            return examResults;
+                studentFinalScore = (examResults[student.id]) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
+                student._finalScore = studentFinalScore.toFixed(2);
+            })
+            .sort((a, b) => a._finalScore - b._finalScore);
+            if (students.length <= 10) {
+                return students.slice(0, 9);
+            } else {
+                return students;
+            }
         }
     };
     return Course;
@@ -151,7 +149,6 @@ course1.submitHomework(1, 1);
 course1.submitHomework(2, 1);
 course1.submitHomework(2, 2);
 course1.submitHomework(2, 3);
-let studentsExamInput = [{StudentID: 1, score: 90}, {StudentID: 2, score: 65}];
+let studentsExamInput = [ {StudentID: 1, score: 40}, {StudentID: 2, score: 60} ];
 course1.pushExamResults(studentsExamInput);
-console.log(course1.getExamResults());
-course1.getTopStudents();
+console.log(course1.getTopStudents());
