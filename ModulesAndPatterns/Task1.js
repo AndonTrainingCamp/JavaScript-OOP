@@ -117,7 +117,7 @@ function solve() {
                 });
             }
         },
-        getTopStudents: function (limit) {
+        getTopStudents: function () {
             students.map(student => {
                 let studentFinalScore,
                     homeworkCounter = 0;
@@ -126,7 +126,7 @@ function solve() {
                         homeworkCounter++;
                     }
                 });
-                studentFinalScore = (examResults[student.id]) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
+                studentFinalScore = (examResults[student.id] || 0) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
                 student._finalScore = studentFinalScore.toFixed(2);
             })
             .sort((a, b) => a._finalScore - b._finalScore);
