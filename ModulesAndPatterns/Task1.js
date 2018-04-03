@@ -118,22 +118,17 @@ function solve() {
             }
         },
         getTopStudents: function () {
-            students.map(student => {
-                let studentFinalScore,
-                    homeworkCounter = 0;
-                homeworks.forEach(homework => {
-                    if (student.id === homework.StudentID) {
-                        homeworkCounter++;
-                    }
-                });
-                studentFinalScore = (examResults[student.id] || 0) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
-                student._finalScore = studentFinalScore.toFixed(2);
-            })
-            .sort((a, b) => b._finalScore - a._finalScore);
-            if (students.length <= 10) {
-                return students.slice(0, 9);
+            const resultArr = students.map(student => {
+                const homeworkCounter = homeworks.filter(el => el.StudentID === student.id).length;
+                const examComponent = (examResults[student.id] || 0) * 75 / 100;
+                const hwComponent = homeworkCounter/presentationsNames.length * 25 / 100;
+                student._finalScore = examComponent + hwComponent;
+                return student;
+            }).sort((a, b) => b._finalScore - a._finalScore);
+            if (resultArr.length <= 10) {
+                return resultArr.slice(0, 9);
             } else {
-                return students;
+                return resultArr;
             }
         }
     };
@@ -144,7 +139,9 @@ let course1 = solve(),
 course1.init('Javascript Fundamentals', presents);
 course1.addStudent('Lili Ivanova');
 course1.addStudent('Gosho Patkanov');
+course1.addStudent('Bat Man');
 console.log(course1.getAllStudents());
+course1.submitHomework(3, 2);
 course1.submitHomework(1, 1);
 course1.submitHomework(2, 1);
 course1.submitHomework(2, 2);
