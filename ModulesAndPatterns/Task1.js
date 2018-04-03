@@ -122,9 +122,11 @@ function solve() {
                 const homeworkCounter = homeworks.filter(el => el.StudentID === student.id).length;
                 const examComponent = (examResults[student.id] || 0) * 75 / 100;
                 const hwComponent = homeworkCounter/presentationsNames.length * 25 / 100;
-                student._finalScore = examComponent + hwComponent;
-                return student;
+                const finalScore = examComponent + hwComponent;
+                const copyOfStudent = Object.assign({_finalScore: finalScore}, student);
+                return copyOfStudent;
             }).sort((a, b) => b._finalScore - a._finalScore);
+            console.log(students);
             if (resultArr.length <= 10) {
                 return resultArr.slice(0, 9);
             } else {
