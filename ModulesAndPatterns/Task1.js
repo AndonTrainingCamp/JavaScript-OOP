@@ -125,11 +125,10 @@ function solve() {
                 const finalScore = examComponent + hwComponent;
                 const copyOfStudent = Object.assign({_finalScore: finalScore}, student);
                 return copyOfStudent;
-            }).sort((a, b) => b._finalScore - a._finalScore);
-            if (resultArr.length <= 10) {
-                return resultArr.slice(0, 9);
-            } else {
-                return resultArr;
+            })
+            .sort((a, b) => b._finalScore - a._finalScore)
+            .slice(0, 10);
+            return resultArr;
             }
         }
     };
