@@ -129,7 +129,7 @@ function solve() {
                 studentFinalScore = (examResults[student.id] || 0) * 75 / 100 + homeworkCounter/presentationsNames.length * 25 / 100;
                 student._finalScore = studentFinalScore.toFixed(2);
             })
-            .sort((a, b) => a._finalScore - b._finalScore);
+            .sort((a, b) => b._finalScore - a._finalScore);
             if (students.length <= 10) {
                 return students.slice(0, 9);
             } else {
