@@ -23,7 +23,8 @@ class LinkedList {
         return this._length;
     }
     append(...args) {
-        let current;
+        let current,
+            prevNode;
         args.forEach((value, index, arr) => {
             let node = {
                 data: value,
@@ -31,13 +32,13 @@ class LinkedList {
             };
             if (this._head === null) {
                 this._head = node;
+                prevNode = this._head;
                 this._length++;
             } else {
-                current = this._head;
-                while (current.next) {
-                    current = current.next;
-                }
+                current = prevNode;
                 current.next = node;
+                current = current.next;
+                prevNode = node;
                 this._length++;
             }
         });
