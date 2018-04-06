@@ -55,6 +55,19 @@ class LinkedList {
         if (args.length === 0) {
             return this;
         }
+        this.makeIterable();
+        return this;
+    }
+    prepend(...args) {
+        const queue = this._head;
+
+        return this;
+    }
+    insert(index, ...args) {
+
+    }
+    makeIterable() {
+        let current;
         this[Symbol.iterator] = function* () {
             current = this._head;
             while (current._next !== null) {
@@ -63,13 +76,6 @@ class LinkedList {
             }
             yield current._data;
         };
-        return this;
-    }
-    prepend(...args) {
-
-    }
-    insert(index, ...args) {
-
     }
 }
 let myList = new LinkedList()
