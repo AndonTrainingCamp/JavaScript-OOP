@@ -60,7 +60,25 @@ class LinkedList {
     }
     prepend(...args) {
         const queue = this._head;
-
+        this._head = null;
+        let node,
+            current;
+        args.forEach((value, index, arr) => {
+            node = new listNode(value);
+            if (this._head === null) {
+                this._head = node;
+                this._length++;
+            } else {
+                current = this._head;
+                while (current._next !== null) {
+                    current = current._next;
+                }
+                current._next = node;
+                this._length++;
+            }
+        });
+        current._next._next = queue;
+        this.makeIterable();
         return this;
     }
     insert(index, ...args) {
@@ -80,7 +98,9 @@ class LinkedList {
 }
 let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
-    .append(['Text 7']);
+    .append(['Text 7'])
+    .prepend('Begin', 'is 0');
 for (let el of myList) {
     console.log(el);
 }
+console.log(myList.length);
