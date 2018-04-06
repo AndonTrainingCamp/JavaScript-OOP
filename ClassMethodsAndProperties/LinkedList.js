@@ -14,7 +14,7 @@ class LinkedList {
         return this._length;
     }
     get first() {
-
+        return this._head.data;
     }
     get last() {
 
@@ -38,7 +38,7 @@ class LinkedList {
                 this._length++;
             }
         });
-        //return 
+        return this; 
     }
     prepend(els) {
 
@@ -48,6 +48,5 @@ class LinkedList {
     }
 }
 let myList = new LinkedList();
-myList.append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6');
-myList.append(['Text data']);
+myList.append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6').append(['Text data']);
 console.log(myList);
