@@ -40,13 +40,14 @@ class LinkedList {
         });
         return this; 
     }
-    prepend(els) {
+    prepend(...args) {
 
     }
-    insert(index, els) {
+    insert(index, ...args) {
 
     }
 }
-let myList = new LinkedList();
-myList.append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6').append(['Text data']);
+let myList = new LinkedList()
+    .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
+    .append(['Text data']);
 console.log(myList);
