@@ -32,13 +32,13 @@ class LinkedList {
             };
             if (this._head === null) {
                 this._head = node;
-                prevNode = this._head;
                 this._length++;
             } else {
-                current = prevNode;
-                current.next = node;
-                current = current.next;
-                prevNode = node;
+                current = this._head;
+                while (current.next !== null) {
+                    current = current.next;
+                }
+                current.next = node; 
                 this._length++;
             }
         });
