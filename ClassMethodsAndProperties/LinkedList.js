@@ -77,7 +77,11 @@ class LinkedList {
                 this._length++;
             }
         });
-        current._next._next = queue;
+        if (args.length === 1) {
+            this._head._next = queue;
+        } else {
+            current._next._next = queue;
+        }
         this.makeIterable();
         return this;
     }
@@ -99,7 +103,7 @@ class LinkedList {
 let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
     .append(['Text 7'])
-    .prepend('Begin', 'is 0');
+    .prepend('Begin');
 for (let el of myList) {
     console.log(el);
 }
