@@ -3,7 +3,9 @@
 'use strict';
 
 class listNode {
+    constructor() {
 
+    }
 }
 class LinkedList {
     constructor() {
@@ -38,6 +40,14 @@ class LinkedList {
                 this._length++;
             }
         });
+        this[Symbol.iterator] = function* () {
+            current = this._head;
+                while (current.next !== null) {
+                    yield current.data;
+                    current = current.next;
+                }
+            yield current.data;
+        };
         return this; 
     }
     prepend(...args) {
@@ -50,4 +60,6 @@ class LinkedList {
 let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
     .append(['Text data']);
-console.log(myList);
+for (let el of myList) {
+    console.log(el);
+}
