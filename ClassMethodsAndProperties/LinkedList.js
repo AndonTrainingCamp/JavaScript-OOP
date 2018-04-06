@@ -3,8 +3,9 @@
 'use strict';
 
 class listNode {
-    constructor() {
-
+    constructor(data) {
+        this._data = data;
+        this._next = null;
     }
 }
 class LinkedList {
@@ -16,39 +17,53 @@ class LinkedList {
         return this._length;
     }
     get first() {
-        return this._head.data;
+        if (this._length !== 0) {
+            return this._head.data;
+        } else {
+            return this._head;
+        }
     }
     get last() {
-
+        let current;
+        if (this._length !== 0) {
+            current = this._head;
+            while (current.next !== null) {
+                current = current.next;
+            }
+            return current.data;
+        } else {
+            return this._head;
+        }
     }
     append(...args) {
-        let current;
+        let node,
+            current;
         args.forEach((value, index, arr) => {
-            let node = {
-                data: value,
-                next: null
-            };
+            node = new listNode(value);
             if (this._head === null) {
                 this._head = node;
                 this._length++;
             } else {
                 current = this._head;
-                while (current.next !== null) {
-                    current = current.next;
+                while (current._next !== null) {
+                    current = current._next;
                 }
-                current.next = node; 
+                current._next = node;
                 this._length++;
             }
         });
+        if (args.length === 0) {
+            return this;
+        }
         this[Symbol.iterator] = function* () {
             current = this._head;
-                while (current.next !== null) {
-                    yield current.data;
-                    current = current.next;
-                }
-            yield current.data;
+            while (current._next !== null) {
+                yield current._data;
+                current = current._next;
+            }
+            yield current._data;
         };
-        return this; 
+        return this;
     }
     prepend(...args) {
 
@@ -59,7 +74,7 @@ class LinkedList {
 }
 let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
-    .append(['Text data']);
+    .append(['Text 7']);
 for (let el of myList) {
     console.log(el);
 }
