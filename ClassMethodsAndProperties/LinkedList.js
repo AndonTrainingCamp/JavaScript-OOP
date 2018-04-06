@@ -3,16 +3,7 @@
 'use strict';
 
 class listNode {
-    constructor(data) {
-        this.data = data;
-        this.next = null;
-    }
-    get first() {
 
-    }
-    get last() {
-
-    }
 }
 class LinkedList {
     constructor() {
@@ -22,9 +13,14 @@ class LinkedList {
     get length() {
         return this._length;
     }
+    get first() {
+
+    }
+    get last() {
+
+    }
     append(...args) {
-        let current,
-            prevNode;
+        let current;
         args.forEach((value, index, arr) => {
             let node = {
                 data: value,
@@ -42,6 +38,7 @@ class LinkedList {
                 this._length++;
             }
         });
+        //return 
     }
     prepend(els) {
 
@@ -52,4 +49,5 @@ class LinkedList {
 }
 let myList = new LinkedList();
 myList.append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6');
+myList.append(['Text data']);
 console.log(myList);
