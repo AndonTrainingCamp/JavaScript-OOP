@@ -160,13 +160,34 @@ class LinkedList {
         let removed = this.at(index),
             current = this._head,
             counter = 0;
-            while (current._next !== null && counter !== index - 1) {
-                current = current._next;
-                counter++;
-            }
-            current._next = current._next._next;
-            this._length = this._length - 1;
+        while (current._next !== null && counter !== index - 1) {
+            current = current._next;
+            counter++;
+        }
+        current._next = current._next._next;
+        this._length = this._length - 1;
+        this.makeIterable();
         return removed;
+    }
+    toArray() {
+        const arr = [];
+        for (let el of this) {
+            arr.push(el);
+        }
+        return arr;
+    }
+    toString() {
+        let toString = '',
+            arrList = this.toArray(),
+            counter = 0;
+        for (let el of arrList) {
+            toString += el.toString();
+            counter++;
+            if (counter !== arrList.length) {
+                toString += ' -> '
+            }
+        }
+        return toString;
     }
     makeIterable() {
         let current;
@@ -199,3 +220,6 @@ myList.removeAt(5);
 for (let el of myList) {
     console.log(el);
 }
+console.log('=======================/');
+console.log(myList.toArray());
+console.log(myList.toString());
