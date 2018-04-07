@@ -201,25 +201,3 @@ class LinkedList {
         };
     }
 }
-let myList = new LinkedList()
-    .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
-    .append(['Text 7'])
-    .prepend('Begin')
-    .insert(1, { x: 'inserted' }, { y: 'second inserted' })
-    .insert(7, 'Hi');
-for (let el of myList) {
-    console.log(el);
-}
-myList.at(4, 'changed!');
-console.log('=======================/');
-for (let el of myList) {
-    console.log(el);
-}
-console.log('=======================/');
-myList.removeAt(5);
-for (let el of myList) {
-    console.log(el);
-}
-console.log('=======================/');
-console.log(myList.toArray());
-console.log(myList.toString());
