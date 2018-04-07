@@ -36,6 +36,9 @@ class LinkedList {
         }
     }
     append(...args) {
+        if (args.length === 0) {
+            return this;
+        }
         let node,
             current;
         args.forEach((value, index, arr) => {
@@ -52,13 +55,13 @@ class LinkedList {
                 this._length++;
             }
         });
-        if (args.length === 0) {
-            return this;
-        }
         this.makeIterable();
         return this;
     }
     prepend(...args) {
+        if (args.length === 0) {
+            return this;
+        }
         const queue = this._head;
         this._head = null;
         let node,
@@ -86,7 +89,40 @@ class LinkedList {
         return this;
     }
     insert(index, ...args) {
+        let countIndex = 0,
+            current = this._head;
+        while (current._next !== null && countIndex < index) {
+            current = current._next;
+            countIndex++;
+        }
+        const queue = current;
+        //===========================
+        let insertPart;
+        let node;
+        args.forEach(value => {
+            node = new listNode(value);
+            if (this._head === null) {
+                this._head = node;
+                this._length++;
+            } else {
+                current = this._head;
+                while (current._next !== null) {
+                    current = current._next;
+                }
+                current._next = node;
+                this._length++;
+            }
+        });
+        this.makeIterable();
+        //===========================
+        // current = this._head;
+        // while (current._next !== null && countIndex < index - 1) {
+        //     current = current._next;
+        //     countIndex++;
+        // }
+        // current._next = insertPart;
 
+        return this;
     }
     makeIterable() {
         let current;
@@ -103,8 +139,8 @@ class LinkedList {
 let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
     .append(['Text 7'])
-    .prepend('Begin');
+    .prepend('Begin')
+    .insert(1, { x: 'inserted' });
 for (let el of myList) {
     console.log(el);
 }
-console.log(myList.length);
