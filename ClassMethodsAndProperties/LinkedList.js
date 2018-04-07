@@ -18,7 +18,7 @@ class LinkedList {
     }
     get first() {
         if (this._length !== 0) {
-            return this._head.data;
+            return this._head._data;
         } else {
             return this._head;
         }
