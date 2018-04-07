@@ -137,6 +137,37 @@ class LinkedList {
         this.makeIterable();
         return this;
     }
+    at(index, value) {
+        if (index < this._length - 1 && value === undefined) {
+            let counter = 0;
+            for (let el of this) {
+                if (counter === index) {
+                    return el;
+                }
+                counter++;
+            }
+        } else if (index < this._length - 1 && value !== undefined) {
+            let current = this._head,
+                counter = 0;
+            while (current._next !== null && counter !== index) {
+                current = current._next;
+                counter++;
+            }
+            current._data = value;
+        }
+    }
+    removeAt(index) {
+        let removed = this.at(index),
+            current = this._head,
+            counter = 0;
+            while (current._next !== null && counter !== index - 1) {
+                current = current._next;
+                counter++;
+            }
+            current._next = current._next._next;
+            this._length = this._length - 1;
+        return removed;
+    }
     makeIterable() {
         let current;
         this[Symbol.iterator] = function* () {
@@ -153,9 +184,18 @@ let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
     .append(['Text 7'])
     .prepend('Begin')
-    .insert(1, { x: 'inserted' }, {y: 'second inserted'})
-    .insert(10, 'Hi');
+    .insert(1, { x: 'inserted' }, { y: 'second inserted' })
+    .insert(7, 'Hi');
 for (let el of myList) {
     console.log(el);
 }
-console.log(myList._length);
+myList.at(4, 'changed!');
+console.log('=======================/');
+for (let el of myList) {
+    console.log(el);
+}
+console.log('=======================/');
+myList.removeAt(5);
+for (let el of myList) {
+    console.log(el);
+}
