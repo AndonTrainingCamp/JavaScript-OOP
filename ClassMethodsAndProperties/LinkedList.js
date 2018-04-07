@@ -89,6 +89,9 @@ class LinkedList {
         return this;
     }
     insert(index, ...args) {
+        if (args.length === 0) {
+            return this;
+        }
         if (index === 0) {
             this.prepend(args);
             this.makeIterable();
