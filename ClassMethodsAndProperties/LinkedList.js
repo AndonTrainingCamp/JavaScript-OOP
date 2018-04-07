@@ -89,39 +89,49 @@ class LinkedList {
         return this;
     }
     insert(index, ...args) {
+        if (index === 0) {
+            this.prepend(args);
+            this.makeIterable();
+            return this;
+        } else if (index >= this._length) {
+            this.append(args);
+            this.makeIterable();
+            return this;
+        }
         let countIndex = 0,
             current = this._head;
         while (current._next !== null && countIndex < index) {
             current = current._next;
             countIndex++;
         }
+        const queueLength = this._length - countIndex;
         const queue = current;
         //===========================
-        let insertPart;
-        let node;
+        let lengthInsertPart = 0,
+            node;
+        countIndex = 0;
+        current = this._head;
+        while (countIndex < index - 1) {
+            current = current._next;
+            countIndex++;
+        }
         args.forEach(value => {
             node = new listNode(value);
-            if (this._head === null) {
-                this._head = node;
-                this._length++;
-            } else {
-                current = this._head;
-                while (current._next !== null) {
-                    current = current._next;
-                }
-                current._next = node;
-                this._length++;
+            current._next = node;
+            while (current._next !== null) {
+                current = current._next;
             }
+            lengthInsertPart++;
         });
-        this.makeIterable();
+        this._length = lengthInsertPart + countIndex + 1;
         //===========================
-        // current = this._head;
-        // while (current._next !== null && countIndex < index - 1) {
-        //     current = current._next;
-        //     countIndex++;
-        // }
-        // current._next = insertPart;
-
+        current = this._head;
+        while (current._next !== null) {
+            current = current._next;
+        }
+        current._next = queue;
+        this._length += queueLength;
+        this.makeIterable();
         return this;
     }
     makeIterable() {
@@ -140,7 +150,9 @@ let myList = new LinkedList()
     .append({ a: 1, b: 2 }, [3, 4], 5.99932, 'Hello 6')
     .append(['Text 7'])
     .prepend('Begin')
-    .insert(1, { x: 'inserted' });
+    .insert(1, { x: 'inserted' }, {y: 'second inserted'})
+    .insert(10, 'Hi');
 for (let el of myList) {
     console.log(el);
 }
+console.log(myList._length);
